@@ -1,0 +1,637 @@
+/* --- VARIABLES Y CONFIGURACIÓN BASE --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+:root {
+    --bg: #020204;
+    --card-bg: rgba(13, 13, 17, 0.85);
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --accent-blue: #3b82f6; 
+    --accent-green: #10b981;
+    --accent-orange: #f39c12;
+    --accent-red: #f63b3b;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --glow-strength: rgba(59, 130, 246, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- FONDO DINÁMICO --- */
+.glow-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    filter: blur(80px);
+    z-index: -1;
+    transition: transform 0.5s ease-out;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* --- HEADER Y ELEMENTOS DE ESTADO --- */
+header {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.header-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--accent-blue);
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    margin-bottom: 1rem;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 10px var(--accent-green);
+    animation: pulse 2s infinite;
+}
+
+.location {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.location i {
+    color: var(--accent-blue);
+    margin-right: 5px;
+}
+
+.glitch {
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -3px;
+    background: linear-gradient(to bottom, #fff 60%, var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+}
+
+.intro {
+    color: var(--text-dim);
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin-top: 1.5rem;
+}
+
+.intro strong {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent-blue);
+}
+
+.intro span {
+    color: var(--accent-blue);
+    font-weight: 700;
+}
+
+/* --- SECCIÓN DE MÉTRICAS (STATS) --- */
+.header-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 3rem 0;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.5rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-val {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 35px;
+    background: var(--border-color);
+}
+
+/* --- ACCIONES Y BOTONES --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background: var(--accent-blue);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+    filter: brightness(1.1);
+}
+
+.social-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.8rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-links a:hover {
+    color: var(--accent-blue);
+    transform: scale(1.3) rotate(5deg);
+    filter: drop-shadow(0 0 10px var(--accent-blue));
+}
+
+/* --- SECCIONES Y TÍTULOS --- */
+.section-title {
+    font-size: 2.5rem;
+    margin: 8rem 0 4rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 6px;
+    background: var(--accent-blue);
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+/* --- ESTRUCTURA FLIP CARDS --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+/* --- OPTIMIZACIÓN DE ANIMACIÓN FLIP CARD --- */
+
+.flip-card {
+    background-color: transparent !important;
+    perspective: 2000px; /* Aumentamos la perspectiva para un efecto 3D más natural */
+    height: 420px;
+    margin-bottom: 2.5rem;
+    border: none !important;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    
+    /* Curva de Bézier personalizada para un giro más elegante y elástico */
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    transform-style: preserve-3d;
+}
+
+/* Efecto de "acercamiento" al pasar el cursor antes de girar */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg) scale(1.02); /* Añadimos un ligero escalado */
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 28px; /* Un poco más redondeado para estilo moderno */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* Sombra suave para profundidad */
+}
+
+/* CARA FRONTAL */
+.flip-card-front {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CARA TRASERA */
+.flip-card-back {
+    background: linear-gradient(135deg, #0a0a0e 0%, #161622 100%);
+    color: white;
+    transform: rotateY(180deg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- ESTILO ESTILIZADO DE GALERÍA --- */
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.photo-container {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s ease;
+}
+
+/* Efecto de brillo al pasar sobre la foto trasera */
+.photo-container:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.1);
+    transition: filter 0.4s ease;
+}
+
+.photo-container:hover img {
+    filter: brightness(1) contrast(1);
+}
+
+.photo-container span {
+    font-size: 0.65rem;
+    text-align: center;
+    padding: 10px 4px;
+    display: block;
+    color: var(--text-dim);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: rgba(0,0,0,0.3);
+}
+
+/* Indicador visual más sutil */
+.hint-flip {
+    position: absolute;
+    bottom: 25px;
+    right: 35px;
+    font-size: 0.7rem;
+    color: var(--accent-blue);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.flip-card:hover .hint-flip {
+    opacity: 0;
+}
+
+/* BORDES DE COLORES PARA FLIP CARDS */
+.border-blue .flip-card-inner { border-left: 6px solid var(--accent-blue); }
+.border-green .flip-card-inner { border-left: 6px solid var(--accent-green); }
+.border-orange .flip-card-inner { border-left: 6px solid var(--accent-orange); }
+.border-red .flip-card-inner { border-left: 6px solid var(--accent-red); }
+
+.card-content { padding: 3rem; height: 100%; position: relative; }
+
+.project-card h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Colores de iconos dinámicos */
+.border-red h3 i { color: var(--accent-red); }
+.border-blue h3 i { color: var(--accent-blue); }
+.border-green h3 i { color: var(--accent-green); }
+.border-orange h3 i { color: var(--accent-orange); }
+
+.project-card p {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.hint-flip {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+/* --- GALERÍA DE FOTOS --- */
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+.photo-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.photo-container:hover {
+    transform: scale(1.05);
+    border-color: var(--accent-blue);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    filter: brightness(0.8);
+}
+
+.photo-container span {
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 10px 5px;
+    color: var(--text-dim);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- SKILLS SECTION --- */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-item {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    font-weight: 800;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+}
+
+.skill-item:hover {
+    background: var(--accent-blue);
+    color: #fff;
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* --- FOOTER --- */
+footer {
+    padding: 10rem 0 4rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.03));
+}
+
+footer p {
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 768px) {
+    .container { padding: 0 1.5rem; }
+    .glitch { font-size: 3.5rem; }
+    .header-stats {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+    .stat-divider { display: none; }
+    .header-actions {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .flip-card { height: 650px; }
+    .photo-gallery { grid-template-columns: 1fr; }
+    .photo-container img { height: 120px; }
+    .card-content { padding: 2rem; }
+}
+
+/* --- SECCIÓN TRAYECTORIA (TIMELINE) --- */
+
+#experience {
+    padding: 2rem 0 8rem;
+}
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+/* Línea vertical central/lateral */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px; /* Alineado con los puntos */
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        transparent, 
+        var(--accent-blue) 15%, 
+        var(--accent-blue) 85%, 
+        transparent
+    );
+    opacity: 0.3;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 60px; /* Espacio para la línea y el punto */
+    margin-bottom: 4rem;
+}
+
+/* El punto (Dot) */
+.timeline-dot {
+    position: absolute;
+    left: 12px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    background: var(--bg);
+    border: 3px solid var(--accent-blue);
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 15px var(--accent-blue);
+    transition: all 0.4s ease;
+}
+
+/* Animación del punto al pasar el cursor sobre el item */
+.timeline-item:hover .timeline-dot {
+    background: var(--accent-blue);
+    transform: scale(1.3);
+    box-shadow: 0 0 25px var(--accent-blue);
+}
+
+/* Fecha */
+.timeline-date {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Contenedor de texto */
+.timeline-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.timeline-content:hover {
+    transform: translateX(10px);
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline-content h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.timeline-content p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 15px;
+    }
+    .timeline-dot {
+        left: 7px;
+    }
+    .timeline-item {
+        padding-left: 45px;
+    }
+    .timeline-content {
+        padding: 1.5rem;
+    }
+    .timeline-content h3 {
+        font-size: 1.2rem;
+    }
+}
